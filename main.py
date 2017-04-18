@@ -80,8 +80,3 @@ for tup in impSents:
     for word in sentence:
         print(word, end=' ')
     print()
-
-# TODO
-# add up weights to create weighting for sentences
-# select certain sentences for the summary
-# See what happens!
