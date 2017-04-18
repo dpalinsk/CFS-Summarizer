@@ -1,4 +1,5 @@
 from nltk.corpus import reuters
+from nltk.corpus import stopwords as swCorpus
 import math
 
 #count how many documents the word appears in
@@ -14,14 +15,19 @@ for fid in reuters.fileids():
             else:
                 docCounts[word] = 1
 
+# get a set of the stopwords to ignore in creating the weights.
+swList = swCorpus.words('english')
+stopwords = set(swList)
+
 #create a count for all the words in the article
 inCount = {}
 for word in reuters.words('test/14862'):
-    word = word.lower() #generalize by making them all lowercase
-    if word in inCount.keys():
-        inCount[word] += 1
-    else:
-        inCount[word] = 1
+    word = word.lower()  # generalize by making them all lowercase
+    if word not in stopwords:
+        if word in inCount.keys():
+            inCount[word] += 1
+        else:
+            inCount[word] = 1
 
 #Create a weighting for each word in the article
 weights = {}
