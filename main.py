@@ -17,14 +17,14 @@ Also creates a key.
 def filesForEval(cfs):
 
     #the number of sentences in each summary to be generated
-    length = 10
+    length = 5
     #the number of summaries to be written into the file
     numSummaries = 10
 
     #create the file containing the summaries
-    summFile = open('random_order_summaries.txt', 'w')
+    summFile = open('random_order_summaries_2.txt', 'w')
     #create the file which will be the key
-    keyFile = open('key.txt', 'w')
+    keyFile = open('key_2.txt', 'w')
 
     #generate the appropriate number of summaries
     for n in range(numSummaries):
@@ -32,7 +32,7 @@ def filesForEval(cfs):
         article = random.choice(reuters.fileids())
         #make sure the article is of the apropriate length
         # I decided at least twice the length of the summary in this case.
-        while len(reuters.sents(article)) < length*2:
+        while len(reuters.sents(article)) < length*4:
             article = random.choice(reuters.fileids())
 
         #print info about the article into the summary-containing document
