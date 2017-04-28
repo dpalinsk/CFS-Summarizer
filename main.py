@@ -4,11 +4,26 @@
 from nltk.corpus import reuters
 from summarizer import Summarizer
 import random
+import paragraphs
+
 
 def main():
     # create our summarizer
     cfs = Summarizer()
-    filesForEval(cfs)
+    getSummaries(cfs, 2)
+
+def getSummaries(cfs, number_of_summaries):
+    for n in range(number_of_summaries):
+        # get a random article from the corpus
+        article = random.choice(reuters.fileids())
+        # make sure the article is of the apropriate length
+        # I decided at least 5 sentences!
+        while len(reuters.sents(article)) < 5:
+            article = random.choice(reuters.fileids())
+
+        length = len(reuters.sents(article))//2
+        summary_sentences = cfs.summarize(article, length)
+        print_summary(summary_sentences)
 
 '''
 A function which generates both selections of sentences and summaries and prints them into a document.
@@ -18,8 +33,9 @@ def filesForEval(cfs):
 
     #the number of sentences in each summary to be generated
     length = 5
+
     #the number of summaries to be written into the file
-    numSummaries = 10
+    number_of_summaries = 10
 
     #create the file containing the summaries
     summFile = open('random_order_summaries_2.txt', 'w')
@@ -27,7 +43,7 @@ def filesForEval(cfs):
     keyFile = open('key_2.txt', 'w')
 
     #generate the appropriate number of summaries
-    for n in range(numSummaries):
+    for n in range(number_of_summaries):
         #get a random article from the corpus
         article = random.choice(reuters.fileids())
         #make sure the article is of the apropriate length
@@ -103,12 +119,11 @@ def getRandom(article, length):
 '''
 Print the summaries given as a 3D list ( Summaries[Sentences[Words]] )
 '''
-def printSumms(summs):
-    for summary in summs:
-        for sentence in summary:
-            for word in sentence:
-                print(word, end=' ')
-            print()
+def print_summary(summary):
+    for sentence in summary:
+        for word in sentence:
+            print(word, end=' ')
         print()
+    print()
 
 main()
