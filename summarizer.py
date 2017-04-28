@@ -60,7 +60,8 @@ class Summarizer:
         for index, sentence in enumerate(reuters.sents(article)):
             # calculate the weight of the sentence
             #The heuristics:
-            sum_word_weight = self.getSumofWordWeight(sentence, word_weights)
+            sum_word_weight = self.getSumofWordWeights(sentence, word_weights)
+            #............
             #Add them together with multipliers:
             sentence_weight = 1*sum_word_weight
 
@@ -117,7 +118,6 @@ class Summarizer:
     A function to sort a dictionary.
     Author: Derek Palinski
     '''
-
     def sortDict(self, weights):
         ret = [(weights[key], key) for key in weights]
         ret.sort()
@@ -127,7 +127,7 @@ class Summarizer:
     '''
     A function which gets the sum of the word weights in the sentence
     '''
-    def getSumofWordWeight(self, sentence, word_weights):
+    def getSumofWordWeights(self, sentence, word_weights):
         sum_word_weight = 0
         for word in sentence:
             word = word.lower()
