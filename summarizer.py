@@ -4,6 +4,7 @@
 from nltk.corpus import reuters
 from nltk.corpus import stopwords as swCorpus
 import math
+import paragraphs
 
 '''
 A class for our summarizer object
@@ -56,22 +57,27 @@ class Summarizer:
         word_weights = self.getWordWeights(article)
         # self.printWeights(weights)
 
+        sentence_index = 0
         important_sentences = []
-        for index, sentence in enumerate(reuters.sents(article)):
-            # calculate the weight of the sentence
-            #The heuristics:
-            sum_word_weight = self.getSumofWordWeights(sentence, word_weights)
-            #............
-            #Add them together with multipliers:
-            sentence_weight = 1*sum_word_weight
+        for paragraph_index, paragraph in enumerate(paragraphs.para_tokenize(reuters.raw(article))):
+            for sentence in paragraph:
+                # calculate the weight of the sentence
+                #The heuristics:
+                sum_word_weight = self.getSumofWordWeights(sentence, word_weights)
+                #............
+                #Add them together with multipliers:
+                sentence_weight = 1*sum_word_weight
 
-            # add the sentence if it is above the least weighted sentence in the list
-            if len(important_sentences) < length or sentence_weight > important_sentences[length - 1][0]:
-                tup = (sentence_weight, index, sentence)
-                important_sentences.append(tup)
-                important_sentences.sort(reverse=True)
-                if len(important_sentences) > length:
-                    important_sentences = important_sentences[:(length - 1)]
+                # add the sentence if it is above the least weighted sentence in the list
+                if len(important_sentences) < length or sentence_weight > important_sentences[length - 1][0]:
+                    #store the sentence as a tuple with the sentence weight,
+                    tup = (sentence_weight, sentence_index, sentence)
+                    important_sentences.append(tup)
+                    important_sentences.sort(reverse=True)
+                    if len(important_sentences) > length:
+                        important_sentences = important_sentences[:(length - 1)]
+
+                sentence_index += 1
 
         important_sentences.sort(key=self.getPosition)
         return important_sentences
