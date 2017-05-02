@@ -1,6 +1,4 @@
 
-import nltk
-import nltk.data
 
 
 
@@ -16,7 +14,7 @@ def position(pars):
 	sizep=sizep-1
 	medP=sizep/2
 	
-
+	scount=0
 	for x in range(0,len(pars)):
 
 		size1=len(pars)
@@ -64,7 +62,8 @@ def position(pars):
 					test=test/numS
 					sweight=test
 					weight=0.5*(sweight + pweight)
-				all.append( (weight, elt))
+				all.append( (weight, scount))
+			scount= scount +1
 	return all
 
 	
