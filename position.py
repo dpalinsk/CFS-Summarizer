@@ -72,4 +72,4 @@ def main():
 	print(position(pars)) 	
 	
 
-main()
+#main()
