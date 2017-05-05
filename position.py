@@ -67,9 +67,3 @@ def position(pars):
 	return all
 
 	
-def main():
-	pars=[ ["this is a sentence.","here is also a sentence."], ["a yes a sentence for par 2.", "we are in par 2.", "what a dream is par 2"] ]
-	print(position(pars)) 	
-	
-
-#main()

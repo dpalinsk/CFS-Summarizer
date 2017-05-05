@@ -8,14 +8,33 @@ import paragraphs
 
 
 def main():
+    #ask user for how many summaries they want
+    print("Welcome to CFS's Summary generator. This pulls articles from NLTK's reuter's corpus and summarizers them\n")
+    try:
+        numarts=eval(input("How many articles do you wish us to summarize?: "))
+    except Exception:
+        print("Uh oh, looks like that wasn't a number... \n Please try again")
+        return
+
+    #prevents users from asking for negative numbers or more than 5 at a time.
+    if numarts<1:
+        print("I understand why you wouldn't want to read summaries of financial articles, but come on, at least one? =[ ")
+        return
+    if numarts>5:
+        print("Okay, do you really want to read more than five bland reuters articles summaries at a time?")
+        print("Please try a more sensible number")
+        return
+
+    print()
     # create our summarizer
     cfs = Summarizer()
-    getSummaries(cfs, 2)
+    getSummaries(cfs, numarts)
 
 def getSummaries(cfs, number_of_summaries):
     for n in range(number_of_summaries):
         # get a random article from the corpus
         article = random.choice(reuters.fileids())
+        print("Article: ", article)
         # make sure the article is of the apropriate length
         # I decided at least 5 sentences!
         while len(reuters.sents(article)) < 5:
@@ -120,10 +139,20 @@ def getRandom(article, length):
 Print the summaries given as a 3D list ( Summaries[Sentences[Words]] )
 '''
 def print_summary(summary):
+    print("-----------SUMMARY BELOW:--------------")
+
+    title=""
+    done=False
     for sentence in summary:
         for word in sentence:
-            print(word, end=' ')
-        print()
+            if done==False:
+                if word==word.upper():
+                    title=title+' '+word
+                else:
+                    done=True
+                    print(title,"\n")
+            else:
+                print( word, end=" ")
     print()
-
+    print("\n------------END OF SUMMARY---------------\n")
 main()
