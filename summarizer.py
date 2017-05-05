@@ -67,7 +67,7 @@ class Summarizer:
                 position_weight = 0
                 #............
                 #Add them together with multipliers:
-                sentence_weight = 1*sum_word_weight + 1*position_weight
+                sentence_weight = 1*sum_word_weight + 0.5*position_weight
                 #add sentence to list
                 tup = (sentence_weight, sentence_index, sentence)
                 word_weighted_sentences.append(tup)
@@ -93,8 +93,8 @@ class Summarizer:
                 sum_word_weight = word_weighted_sentences[sentence_index][0]
                 position_weight = position_weighted_sentences[sentence_index][0]
 
-                print(sum_word_weight)
-                print(position_weight)
+                #print(sum_word_weight)
+                #print(position_weight)
 
                 sentence_weight = 1*sum_word_weight + 100*position_weight
                 tup = (sentence_weight, sentence_index, sentence)
